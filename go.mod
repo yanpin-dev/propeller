@@ -17,4 +17,5 @@ require (
 	golang.org/x/time v0.0.0-20210220033141-f8bda1e9f3ba // indirect
 	github.com/streadway/amqp v1.0.0
 	github.com/go-redis/redis v6.15.8+incompatible
+	github.com/nacos-group/nacos-sdk-go v1.0.6
 )
