@@ -11,9 +11,9 @@ const (
 	EnvCfgFile        = "CFG_FILE"
 	Prefix            = "propeller"
 
-	EnvProvider = "NACOS_ENABLED"
-	EnvEndpoint = "NACOS_ENDPOINT"
-	EnvPath     = "NACOS_PATH"
+	EnvProvider = "CFG_REMOTE_PROVIDER"
+	EnvEndpoint = "CFG_REMOTE_ENDPOINT"
+	EnvPath     = "CFG_REMOTE_PATH"
 )
 
 func NewViper() (*viper.Viper, error) {
@@ -27,6 +27,7 @@ func NewViper() (*viper.Viper, error) {
 		endpoint := os.Getenv(EnvEndpoint)
 		path := os.Getenv(EnvPath)
 		v.AddRemoteProvider(provider, endpoint, path)
+		v.ReadRemoteConfig()
 	} else {
 		file := os.Getenv(EnvCfgFile)
 		if file == "" {
@@ -34,12 +35,11 @@ func NewViper() (*viper.Viper, error) {
 		}
 		v.AddConfigPath(".")
 		v.SetConfigFile(file)
-	}
-
-	if err := v.ReadInConfig(); err == nil {
-		fmt.Printf("use config file -> %s\n", v.ConfigFileUsed())
-	} else {
-		return nil, err
+		if err := v.ReadInConfig(); err == nil {
+			fmt.Printf("use config file -> %s\n", v.ConfigFileUsed())
+		} else {
+			return nil, err
+		}
 	}
 
 	return v.Sub(Prefix), err
