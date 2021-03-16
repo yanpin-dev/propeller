@@ -3,7 +3,6 @@ package config
 import (
 	"fmt"
 	"github.com/spf13/viper"
-	"github.com/yanpin-dev/propeller/pkg/nacos/config"
 	"os"
 )
 
@@ -12,9 +11,9 @@ const (
 	EnvCfgFile        = "CFG_FILE"
 	Prefix            = "propeller"
 
-	EnvNacosEnabled  = "NACOS_ENABLED"
-	EnvNacosEndpoint = "NACOS_ENDPOINT"
-	EnvNacosPath     = "NACOS_PATH"
+	EnvProvider = "NACOS_ENABLED"
+	EnvEndpoint = "NACOS_ENDPOINT"
+	EnvPath     = "NACOS_PATH"
 )
 
 func NewViper() (*viper.Viper, error) {
@@ -23,11 +22,11 @@ func NewViper() (*viper.Viper, error) {
 		v   = viper.New()
 	)
 
-	nacosEnabled := os.Getenv(EnvNacosEnabled)
-	if nacosEnabled == "true" {
-		endpoint := os.Getenv(EnvNacosEndpoint)
-		path := os.Getenv(EnvNacosPath)
-		v.AddRemoteProvider(config.ProviderName, endpoint, path)
+	provider := os.Getenv(EnvProvider)
+	if provider != "" {
+		endpoint := os.Getenv(EnvEndpoint)
+		path := os.Getenv(EnvPath)
+		v.AddRemoteProvider(provider, endpoint, path)
 	} else {
 		file := os.Getenv(EnvCfgFile)
 		if file == "" {
