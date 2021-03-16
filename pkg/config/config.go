@@ -11,9 +11,9 @@ const (
 	EnvCfgFile        = "CFG_FILE"
 	Prefix            = "propeller"
 
-	EnvProvider = "NACOS_ENABLED"
-	EnvEndpoint = "NACOS_ENDPOINT"
-	EnvPath     = "NACOS_PATH"
+	EnvProvider = "CFG_REMOTE_ENABLED"
+	EnvEndpoint = "CFG_REMOTE_ENDPOINT"
+	EnvPath     = "CFG_REMOTE_PATH"
 )
 
 func NewViper() (*viper.Viper, error) {
