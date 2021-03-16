@@ -11,7 +11,7 @@ const (
 	EnvCfgFile        = "CFG_FILE"
 	Prefix            = "propeller"
 
-	EnvProvider = "CFG_REMOTE_ENABLED"
+	EnvProvider = "CFG_REMOTE_PROVIDER"
 	EnvEndpoint = "CFG_REMOTE_ENDPOINT"
 	EnvPath     = "CFG_REMOTE_PATH"
 )
