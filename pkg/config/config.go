@@ -14,6 +14,7 @@ const (
 	EnvProvider = "CFG_REMOTE_PROVIDER"
 	EnvEndpoint = "CFG_REMOTE_ENDPOINT"
 	EnvPath     = "CFG_REMOTE_PATH"
+	EnvType     = "CFG_TYPE"
 )
 
 func NewViper() (*viper.Viper, error) {
@@ -26,8 +27,12 @@ func NewViper() (*viper.Viper, error) {
 	if provider != "" {
 		endpoint := os.Getenv(EnvEndpoint)
 		path := os.Getenv(EnvPath)
+		cfgType := os.Getenv(EnvType)
+		v.SetConfigType(cfgType)
 		v.AddRemoteProvider(provider, endpoint, path)
-		v.ReadRemoteConfig()
+		if err := v.ReadRemoteConfig(); err != nil {
+			return nil, err
+		}
 	} else {
 		file := os.Getenv(EnvCfgFile)
 		if file == "" {
